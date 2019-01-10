@@ -7,7 +7,7 @@
 import sys
 import subprocess
 import datetime
-#import cv2
+import cv2
 from picamera import PiCamera
 import picamera.array
 from time import sleep
@@ -49,13 +49,13 @@ def run():
     sleep(5)
     stream = picamera.array.PiRGBArray(cam)
 
-    #fgbg = cv2.createBackgroundSubtractorMOG()
+    fgbg = cv2.createBackgroundSubtractorMOG()
 
     for x in range(10000):
         #get picamera still image
         cam.capture(stream, format='bgr')
         frame = stream.array
-        #fgmask = fgbg.apply(frame)
+        fgmask = fgbg.apply(frame)
         print(frame)
         if np.sum(fgmask) > thres and trig_sleep < 0:
             trig_sleep = 100
